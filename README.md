@@ -3,7 +3,9 @@ Yapay zeka ile kur tahmini yaparak para kazanmak/kaybetmek
 
 DIKKAT : Bu kaynak kodlar sadece yapay zeka yontemleri ile tahmin amaclidir. 
 
-Hicbir sekilde size tahminlerin mutlak dogru olacagini garanti etmek. 
+Hicbir sekilde size tahminlerin mutlak dogru olacagini garanti etmez. 
 
-Program
+Her ne kadar cogunlukla iyi tahminler yapsada zaman zaman sonuclari yikici olabilir.
+
+Programlari lutfen sorumlu bir seklilde kullaniniz.
 
