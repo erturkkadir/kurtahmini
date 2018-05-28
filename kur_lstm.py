@@ -1,29 +1,27 @@
-import numpy as np
 import pandas as pd
-from keras.layers import Dense, LSTM, Dropout
+import numpy as np
+
 from keras.models import Sequential
+from keras.layers import Dense, LSTM, Dropout
 
-windows_size = 70       # Pencere boyutu
-output_size = 2         # sonraki kac deger tahmin edilecek
+
+output_size = 2         # sonraki 4 degeri tahmin etmeye calis
 epochs = 700            # islemi tekrar sayisi
-
 features = 3
-
 
 def get_data(y):
     # lstm datayi (rows, timesteps, features) formatinda ister
-    # rows : ornek sayimiz,
+    # rows : ornek sayimiz
     # timesteps : zaman adimlari
     # features : ogrenme verimizin sutun sayisi
     # training verisi (rows, 1, features)
-    # output verisi (rows, 1)
+    # output verisi (rows, output_size)
 
-    train_size = int(len(y)*0.7)                # Verinin %70 ini egitim icin kalaninin da test icin ayiracagiz
+    train_size = int(len(y)*0.7)                # Verinin %70 ini egitim icin kalaninin da test icin ayiracagiz, 180
 
     train = y[0:train_size]
     test = y[train_size:len(y)]
-    print(train.shape)
-    print(test.shape)
+    # print("Shape : ", train.shape)
 
     ############## TRAIN DATA ####################
     train_x = []
@@ -36,32 +34,25 @@ def get_data(y):
 
     train_x = np.array(train_x)
     train_y = np.array(train_y)
-    print("train_x shape : ", train_x.shape)
-    print("train_y shape : ", train_y.shape)
 
     ########### TEST DATA ########################
     test_x = []
     test_y = []
-    last = len(y) - features - output_size
+    last = len(y) - output_size - features
     for i in range(train_size, last):
-        tmp_x = y[i:(i + features)]
+        tmp_x = y[i:(i+features)]
         tmp_y = y[(i + features):(i + features + output_size)]
         test_x.append(np.reshape(tmp_x, (1, features)))
         test_y.append(tmp_y)
 
     test_x = np.array(test_x)
     test_y = np.array(test_y)
-    print("train_x shape : ", train_x.shape)
-    print("train_y shape : ", train_y.shape)
 
     ######## Tahmin edilecek data #######################
     data_x = []
     tmp_x = y[-features:len(y)]
     data_x.append(np.reshape(tmp_x, (1, features)))
     data_x = np.array(data_x)
-
-    print("data_x  : ", data_x)
-    print("data_x shape : ", data_x.shape)
 
     return train_x, train_y, test_x, test_y, data_x
 
